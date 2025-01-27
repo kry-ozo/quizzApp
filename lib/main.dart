@@ -1,58 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:circle_nav_bar/circle_nav_bar.dart';
+import 'package:quizz_app/theme/theme.dart';
 
 void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  int tabIndex = 0;
+  @override
   Widget build(BuildContext context) {
     return  MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: CustomTheme.theme,
       home: Scaffold(
         body: Center(
           child: Text('Hello World!'),
         ),
         bottomNavigationBar: CircleNavBar(
-        activeIndex: 0,
+        activeIndex: tabIndex,
+        onTap: (index){
+          setState(() {
+            tabIndex = index;
+          });
+        },
         activeIcons: const [
-          Icon(Icons.person, color: Colors.deepPurple),
-          Icon(Icons.home, color: Colors.deepPurple),
-          Icon(Icons.favorite, color: Colors.deepPurple),
+          Icon(Icons.home, color: Color.fromARGB(255, 112, 214, 255)),
+          Icon(Icons.quiz, color: Color.fromARGB(255, 112, 214, 255)),
+          Icon(Icons.person, color: Color.fromARGB(255, 112, 214, 255)),
         ],
         inactiveIcons: const [
-          Text("My"),
-          Text("Home"),
-          Text("Like"),
+          Text("Home", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255)),),
+          Text("Quizz", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255)),),
+          Text("Account", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255)),),
         ],
-        color: Colors.white,
+        color: Color.fromARGB(255, 112, 214, 255),
         circleColor: Colors.white,
-        height: 60,
+        height: 65,
         circleWidth: 60,
-
         // tabCurve: ,
         
-        cornerRadius: const BorderRadius.only(
-          topLeft: Radius.circular(8),
-          topRight: Radius.circular(8),
-          bottomRight: Radius.circular(24),
-          bottomLeft: Radius.circular(24),
-        ),
-        shadowColor: Colors.deepPurple,
-        circleShadowColor: Colors.deepPurple,
+        cornerRadius: const BorderRadius.all(Radius.zero),
+        shadowColor: Color.fromARGB(255, 112, 214, 255),
+        circleShadowColor: Color.fromARGB(255, 112, 214, 255),
         elevation: 10,
-        gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [ Colors.blue, Colors.red ],
-        ),
-        circleGradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [ Colors.blue, Colors.red ],
-        ),
+        
       ),
       ),
     );
