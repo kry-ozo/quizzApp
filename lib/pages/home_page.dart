@@ -6,7 +6,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("HOME PAGE"),
+      child: Text("HOME PAGE", style: TextStyle(color: Colors.black)),
     );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:circle_nav_bar/circle_nav_bar.dart';
+import 'package:quizz_app/pages/account_page.dart';
+import 'package:quizz_app/pages/home_page.dart';
+import 'package:quizz_app/pages/quizz_page.dart';
 import 'package:quizz_app/theme/theme.dart';
 
 void main() {
@@ -15,15 +18,18 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   int tabIndex = 0;
+  final _pages = [
+    const HomePage(),
+    const QuizzPage(),
+    const AccountPage()
+  ];
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: CustomTheme.theme,
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+        body: _pages[tabIndex],
         bottomNavigationBar: CircleNavBar(
         activeIndex: tabIndex,
         onTap: (index){

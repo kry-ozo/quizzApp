@@ -6,7 +6,7 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("ACCOUNT PAGE"),
+      child: Text("ACCOUNT PAGE", style: TextStyle(color: Colors.black),),
     );
   }
 }
