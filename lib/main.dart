@@ -54,7 +54,6 @@ class _MainAppState extends State<MainApp> {
         // tabCurve: ,
         
         cornerRadius: const BorderRadius.all(Radius.zero),
-        shadowColor: Color.fromARGB(255, 112, 214, 255),
         circleShadowColor: Color.fromARGB(255, 112, 214, 255),
         elevation: 10,
         
