@@ -7,13 +7,16 @@ class CustomTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      color: Colors.blue,
-      width: 240,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Color.fromARGB(255, 115, 166, 173),
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      width: 300,
       child:  Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(title)
+          Text(title, style: TextStyle(fontSize: 28, color: Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold))
         ],
       ),
     );

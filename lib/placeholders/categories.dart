@@ -1,5 +1,4 @@
 List<String> categories = [
-  "Any Category",
   "General Knowledge",
   "Books",
   "Film",
