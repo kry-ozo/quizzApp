@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:circle_nav_bar/circle_nav_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:quizz_app/pages/account_page.dart';
 import 'package:quizz_app/pages/home_page.dart';
 import 'package:quizz_app/pages/quizz_page.dart';
+import 'package:quizz_app/providers/quizz_provider.dart';
 import 'package:quizz_app/theme/theme.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => QuizzProvider(),
+      child:const MainApp() ,
+    ),
+    );
 }
 
 class MainApp extends StatefulWidget {
