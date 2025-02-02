@@ -1,0 +1,22 @@
+List<String> categories = [
+  "Any Category",
+  "General Knowledge",
+  "Books",
+  "Film",
+  "Music",
+  "Musicals & Theatres",
+  "Television",
+  "Video Games",
+  "Board Games",
+  "Science & Nature",
+  "Computers",
+  "Mathematics",
+  "Mythology",
+  "Sports",
+  "Geography",
+  "History",
+  "Politics",
+  "Art",
+  "Celebrities",
+  "Animals"
+];
