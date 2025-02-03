@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizz_app/components/custom_tile.dart';
+import 'package:quizz_app/pages/quizz/quizz_settings.dart';
 import 'package:quizz_app/placeholders/categories.dart';
 import 'package:quizz_app/placeholders/users_placeholder.dart';
 
@@ -24,7 +25,13 @@ class HomePage extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 5,
             itemBuilder: (context, index){
-              return CustomTile(title: categories[index],);
+              return GestureDetector(
+                child: CustomTile(title: categories[index],),
+                onTap: (){
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=> QuizzSettings(quizzType: categories[index])));
+                },
+                );
           })
         ),
         const Padding(
