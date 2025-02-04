@@ -14,7 +14,7 @@ class QuizzProvider extends ChangeNotifier{
         (item)=> QuizzModel.fromJson(item)
       ).toList();
     }else{
-      throw Exception("Failed to load question");
+      throw Exception("Failed to load questions");
     }
   } 
 

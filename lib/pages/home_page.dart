@@ -47,8 +47,8 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(players[index].name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                    Text("points: ${players[index].points}", style: TextStyle(fontSize: 18))
+                    Text(players[index].name, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    Text("points: ${players[index].points}", style: const TextStyle(fontSize: 18))
                   ],
                 ),
               );
