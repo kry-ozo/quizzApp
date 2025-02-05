@@ -9,6 +9,9 @@ class QuizzSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Navigator.of(context).pop();
+        }, icon: Icon(Icons.arrow_back, color: Color.fromARGB(255, 255, 250, 255),)) ,
         title: Text("$quizzType Quizz", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold),),
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 0, 53, 84),
@@ -24,20 +27,24 @@ class QuizzSettings extends StatelessWidget {
           SizedBox(height: 40,),
           SizedBox(
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               spacing: 15,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 120,
                   child: TextField(
                     decoration: InputDecoration(
-                      
+                      contentPadding: EdgeInsets.symmetric(vertical: 12),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromARGB(255, 0, 53, 84))
+                      )
                     ),
                   )
                   ),
                 SizedBox(
                   width: 120,
-                  child:DropdownButton(
+                  child:DropdownButtonFormField(
                     value: diffList.first,
                     onChanged: (value){
 
@@ -45,7 +52,10 @@ class QuizzSettings extends StatelessWidget {
                     items: diffList.map<DropdownMenuItem<String>>((String value){
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value)
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Text(value),
+                        )
                         );
                     }).toList(),
                   )
@@ -54,9 +64,15 @@ class QuizzSettings extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 40,),
           TextButton(onPressed: (){
 
-          }, child: Text("Start a quiz"))
+          },
+          style: TextButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 0, 53, 84),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20)
+          ),
+          child: const Text("Start a quiz", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255), fontSize:16),))
           
         ],
       ),
