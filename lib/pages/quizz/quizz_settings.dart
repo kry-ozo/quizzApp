@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:quizz_app/pages/quizz/show_quizz.dart';
 
-class QuizzSettings extends StatelessWidget {
+class QuizzSettings extends StatefulWidget {
   final String quizzType;
   const QuizzSettings({super.key, required this.quizzType});
   static List<String >diffList = ["easy", "medium", "hard"];
 
+  @override
+  State<QuizzSettings> createState() => _QuizzSettingsState();
+}
+
+class _QuizzSettingsState extends State<QuizzSettings> {
+  
+  String? firstValue = QuizzSettings.diffList.first;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +20,7 @@ class QuizzSettings extends StatelessWidget {
         leading: IconButton(onPressed: (){
           Navigator.of(context).pop();
         }, icon: Icon(Icons.arrow_back, color: Color.fromARGB(255, 255, 250, 255),)) ,
-        title: Text("$quizzType Quizz", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold),),
+        title: Text("${widget.quizzType} Quizz", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold),),
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 0, 53, 84),
       ),
@@ -45,11 +53,14 @@ class QuizzSettings extends StatelessWidget {
                 SizedBox(
                   width: 120,
                   child:DropdownButtonFormField(
-                    value: diffList.first,
+                    value: firstValue,
+                    hint: Text("Difficulty"),
                     onChanged: (value){
-
+                      setState(() {
+                        firstValue = value;
+                      });
                     },
-                    items: diffList.map<DropdownMenuItem<String>>((String value){
+                    items: QuizzSettings.diffList.map<DropdownMenuItem<String>>((String value){
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Padding(
@@ -66,7 +77,10 @@ class QuizzSettings extends StatelessWidget {
           ),
           const SizedBox(height: 40,),
           TextButton(onPressed: (){
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context)=>ShowQuizz(difficulty: "easy", category: "books", amount: "10"))
+              );
           },
           style: TextButton.styleFrom(
             backgroundColor: const Color.fromARGB(255, 0, 53, 84),
