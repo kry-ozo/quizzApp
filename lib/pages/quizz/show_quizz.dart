@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizz_app/components/question.dart';
 import 'package:quizz_app/models/quizz_model.dart';
 import 'package:quizz_app/providers/quizz_provider.dart';
 
@@ -46,7 +47,7 @@ class _ShowQuizzState extends State<ShowQuizz> {
       ),
       body: Column(
         children: [
-          Center(
+          Expanded(
             child: FutureBuilder(
               future: quizzQuestions,
               builder: (context, snapshot) {
@@ -55,9 +56,13 @@ class _ShowQuizzState extends State<ShowQuizz> {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else if (snapshot.hasData) {
-                  List<String> answears = snapshot.data![0].incorrectAnswers;
-                  answears.add(snapshot.data![0].correctAnswer);
-                  return Text(snapshot.data![0].question); 
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context,index){
+                      List<String> answears = snapshot.data![index].incorrectAnswers;
+                      answears.add(snapshot.data![index].correctAnswer);
+                      return Question(question: snapshot.data![index].question, answears: answears);
+                  });
                 } else {
                   return Text('No data available');
                 }
