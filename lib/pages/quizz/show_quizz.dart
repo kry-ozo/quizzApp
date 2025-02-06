@@ -21,7 +21,7 @@ class ShowQuizz extends StatefulWidget {
 
 class _ShowQuizzState extends State<ShowQuizz> {
   late Future<List<QuizzModel>> quizzQuestions;
-  bool _isInitialized = false; // Flaga, aby uniknąć ponownego inicjalizowania
+  bool _isInitialized = false; 
 
   @override
   void didChangeDependencies() {
@@ -55,6 +55,8 @@ class _ShowQuizzState extends State<ShowQuizz> {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else if (snapshot.hasData) {
+                  List<String> answears = snapshot.data![0].incorrectAnswers;
+                  answears.add(snapshot.data![0].correctAnswer);
                   return Text(snapshot.data![0].question); 
                 } else {
                   return Text('No data available');

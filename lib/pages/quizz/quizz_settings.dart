@@ -79,7 +79,7 @@ class _QuizzSettingsState extends State<QuizzSettings> {
           TextButton(onPressed: (){
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context)=>ShowQuizz(difficulty: "easy", category: "books", amount: "10"))
+              MaterialPageRoute(builder: (context)=>ShowQuizz(difficulty: "easy", category: "10", amount: "10"))
               );
           },
           style: TextButton.styleFrom(
