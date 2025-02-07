@@ -12,10 +12,10 @@ class Question extends StatelessWidget {
       child: Column(
         children: [
           Text(question),
-          Row(
-            children: answears.map((answear)=> TextButton(onPressed: (){
-
-            }, child: Text(answear))).toList(),
+          Column(
+            children: answears.map((answear)=> Container(
+              child: Text(answear)
+            )).toList(),
           )
         ],
       ),
