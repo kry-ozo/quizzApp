@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizz_app/components/question.dart';
-import 'package:quizz_app/models/quizz_model.dart';
 import 'package:quizz_app/providers/quizz_provider.dart';
 
 class ShowQuizz extends StatefulWidget {
@@ -20,57 +19,42 @@ class ShowQuizz extends StatefulWidget {
   State<ShowQuizz> createState() => _ShowQuizzState();
 }
 
-class _ShowQuizzState extends State<ShowQuizz> {
-  late Future<List<QuizzModel>> quizzQuestions;
-  bool _isInitialized = false; 
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (!_isInitialized) {
-      final quizzProvider = Provider.of<QuizzProvider>(context);
-      quizzQuestions = quizzProvider.fetchQuizzQuestions(
-        widget.category,
-        widget.difficulty,
-        widget.amount,
-      );
-      _isInitialized = true; 
-    }
-  }
-
+class _ShowQuizzState extends State<ShowQuizz>{
   @override
   Widget build(BuildContext context) {
+    final quizzProvider = Provider.of<QuizzProvider>(context, listen: false);
+
+    if (quizzProvider.questions.isEmpty && !quizzProvider.isLoading) {
+      quizzProvider.fetchQuizzQuestions(widget.category, widget.difficulty, widget.amount);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("Quiz"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: FutureBuilder(
-              future: quizzQuestions,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator(); 
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context,index){
-                      List<String> answears = snapshot.data![index].incorrectAnswers;
-                      answears.add(snapshot.data![index].correctAnswer);
-                      return Question(question: snapshot.data![index].question, answears: answears);
-                  });
-                } else {
-                  return Text('No data available');
-                }
+       body: Consumer<QuizzProvider>(
+        builder: (context, quizzProvider, child) {
+          if (quizzProvider.isLoading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (quizzProvider.error != null) {
+            return Center(child: Text('Error: ${quizzProvider.error}'));
+          } else if (quizzProvider.questions.isEmpty) {
+            return Center(child: Text('No data available'));
+          } else {
+            return ListView.builder(
+              itemCount: quizzProvider.questions.length,
+              itemBuilder: (context, index) {
+               
+                return Question(
+                  question: quizzProvider.questions[index].question,
+                  answears: quizzProvider.questions[index].allAnswears,
+                );
               },
-            ),
-          ),
-        ],
+            );
+          }
+        }
       ),
     );
   }
+  
+  
 }
