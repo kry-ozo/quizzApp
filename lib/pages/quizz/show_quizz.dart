@@ -26,40 +26,12 @@ class _ShowQuizzState extends State<ShowQuizz>{
 
   @override
   Widget build(BuildContext context) {
-    final quizzProvider = Provider.of<QuizzProvider>(context, listen: false);
-
-    if (quizzProvider.questions.isEmpty && !quizzProvider.isLoading) {
-      quizzProvider.fetchQuizzQuestions(widget.category, widget.difficulty, widget.amount);
-    }
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Quiz"),
       ),
-       body:  Selector<QuizzProvider, List<QuizzModel>>(
-  selector: (context, quizzProvider) => quizzProvider.questions,
-  builder: (context, questions, child) {
-    final quizzProvider = Provider.of<QuizzProvider>(context, listen: false);
-
-    if (quizzProvider.isLoading) {
-      return const Center(child: const CircularProgressIndicator());
-    } else if (quizzProvider.error != null) {
-      return Center(child: Text('Error: ${quizzProvider.error}'));
-    } else if (questions.isEmpty) {
-      return const Center(child: const Text('No data available'));
-    } else {
-      return ListView.builder(
-        key: ValueKey(quizzProvider.questions.hashCode), 
-        itemCount: questions.length,
-        itemBuilder: (context, index) {
-          return Question(
-            question: questions[index].question,
-            answears: questions[index].allAnswears,
-          );
-        },
-      );
-    }
-  },
-),
+       body:  Container() //TODO: Optimize this widget to not flicering next time
     );
   }
   
