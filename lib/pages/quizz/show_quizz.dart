@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizz_app/components/question.dart';
+import 'package:quizz_app/models/quizz_model.dart';
 import 'package:quizz_app/providers/quizz_provider.dart';
 
 class ShowQuizz extends StatefulWidget {
@@ -20,6 +21,9 @@ class ShowQuizz extends StatefulWidget {
 }
 
 class _ShowQuizzState extends State<ShowQuizz>{
+
+
+
   @override
   Widget build(BuildContext context) {
     final quizzProvider = Provider.of<QuizzProvider>(context, listen: false);
@@ -29,32 +33,37 @@ class _ShowQuizzState extends State<ShowQuizz>{
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text("Quiz"),
+        title: const Text("Quiz"),
       ),
-       body: Consumer<QuizzProvider>(
-        builder: (context, quizzProvider, child) {
-          if (quizzProvider.isLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (quizzProvider.error != null) {
-            return Center(child: Text('Error: ${quizzProvider.error}'));
-          } else if (quizzProvider.questions.isEmpty) {
-            return Center(child: Text('No data available'));
-          } else {
-            return ListView.builder(
-              itemCount: quizzProvider.questions.length,
-              itemBuilder: (context, index) {
-               
-                return Question(
-                  question: quizzProvider.questions[index].question,
-                  answears: quizzProvider.questions[index].allAnswears,
-                );
-              },
-            );
-          }
-        }
-      ),
+       body:  Selector<QuizzProvider, List<QuizzModel>>(
+  selector: (context, quizzProvider) => quizzProvider.questions,
+  builder: (context, questions, child) {
+    final quizzProvider = Provider.of<QuizzProvider>(context, listen: false);
+
+    if (quizzProvider.isLoading) {
+      return const Center(child: const CircularProgressIndicator());
+    } else if (quizzProvider.error != null) {
+      return Center(child: Text('Error: ${quizzProvider.error}'));
+    } else if (questions.isEmpty) {
+      return const Center(child: const Text('No data available'));
+    } else {
+      return ListView.builder(
+        key: ValueKey(quizzProvider.questions.hashCode), 
+        itemCount: questions.length,
+        itemBuilder: (context, index) {
+          return Question(
+            question: questions[index].question,
+            answears: questions[index].allAnswears,
+          );
+        },
+      );
+    }
+  },
+),
     );
   }
+  
+  
   
   
 }
