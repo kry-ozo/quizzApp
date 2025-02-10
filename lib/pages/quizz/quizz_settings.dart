@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quizz_app/models/quizz_model.dart';
 import 'package:quizz_app/pages/quizz/show_quizz.dart';
+import 'package:quizz_app/providers/quizz_provider.dart';
 
 class QuizzSettings extends StatefulWidget {
   final String quizzType;
@@ -19,20 +22,20 @@ class _QuizzSettingsState extends State<QuizzSettings> {
       appBar: AppBar(
         leading: IconButton(onPressed: (){
           Navigator.of(context).pop();
-        }, icon: Icon(Icons.arrow_back, color: Color.fromARGB(255, 255, 250, 255),)) ,
-        title: Text("${widget.quizzType} Quizz", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold),),
+        }, icon: const Icon(Icons.arrow_back, color: const Color.fromARGB(255, 255, 250, 255),)) ,
+        title: Text("${widget.quizzType} Quizz", style: const TextStyle(color: const Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold),),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 0, 53, 84),
+        backgroundColor: const Color.fromARGB(255, 0, 53, 84),
       ),
       body:   Column(
         children: [
-           Center(
-            child:  Padding(
-            padding: EdgeInsets.only(top: 70),
-            child: Text("Quizz Settings", style: TextStyle(color: Color.fromARGB(255, 0, 53, 84), fontSize: 32, fontWeight: FontWeight.bold,) ,),
+           const Center(
+            child:  const Padding(
+            padding: const EdgeInsets.only(top: 70),
+            child: const Text("Quizz Settings", style: const TextStyle(color: const Color.fromARGB(255, 0, 53, 84), fontSize: 32, fontWeight: FontWeight.bold,) ,),
                     ),
           ),
-          SizedBox(height: 40,),
+          const SizedBox(height: 40,),
           SizedBox(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,7 +57,7 @@ class _QuizzSettingsState extends State<QuizzSettings> {
                   width: 120,
                   child:DropdownButtonFormField(
                     value: firstValue,
-                    hint: Text("Difficulty"),
+                    hint: const Text("Difficulty"),
                     onChanged: (value){
                       setState(() {
                         firstValue = value;
@@ -76,10 +79,11 @@ class _QuizzSettingsState extends State<QuizzSettings> {
             ),
           ),
           const SizedBox(height: 40,),
-          TextButton(onPressed: (){
+          TextButton(onPressed: () async {
+            List<QuizzModel> questions = await Provider.of<QuizzProvider>(context, listen: false).fetchQuizzList();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context)=>ShowQuizz(difficulty: "easy", category: "10", amount: "10"))
+              MaterialPageRoute(builder: (context)=> ShowQuizz(questions: questions,))
               );
           },
           style: TextButton.styleFrom(
