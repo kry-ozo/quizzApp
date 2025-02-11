@@ -16,7 +16,8 @@ class QuizzSettings extends StatefulWidget {
 
 class _QuizzSettingsState extends State<QuizzSettings> {
   
-  String? firstValue = QuizzSettings.diffList.first;
+  String? dropdownValue = QuizzSettings.diffList.first;
+  TextEditingController _amountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +44,14 @@ class _QuizzSettingsState extends State<QuizzSettings> {
               spacing: 15,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const SizedBox(
+                 SizedBox(
                   width: 120,
                   child: TextField(
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 12),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromARGB(255, 0, 53, 84))
+                    controller: _amountController,
+                    decoration: const InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                      border: const UnderlineInputBorder(
+                        borderSide: const BorderSide(color: const Color.fromARGB(255, 0, 53, 84))
                       )
                     ),
                   )
@@ -57,11 +59,11 @@ class _QuizzSettingsState extends State<QuizzSettings> {
                 SizedBox(
                   width: 120,
                   child:DropdownButtonFormField(
-                    value: firstValue,
+                    value: dropdownValue,
                     hint: const Text("Difficulty"),
                     onChanged: (value){
                       setState(() {
-                        firstValue = value;
+                        dropdownValue = value;
                       });
                     },
                     items: QuizzSettings.diffList.map<DropdownMenuItem<String>>((String value){
@@ -81,7 +83,8 @@ class _QuizzSettingsState extends State<QuizzSettings> {
           ),
           const SizedBox(height: 40,),
           TextButton(onPressed: () async {
-            List<QuizzModel> questions = await Provider.of<QuizzProvider>(context, listen: false).fetchQuizzList();
+            String amount = _amountController.text;
+            List<QuizzModel> questions = await Provider.of<QuizzProvider>(context, listen: false).fetchQuizzList(amount,widget.category.id, dropdownValue);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context)=> ShowQuizz(questions: questions,))

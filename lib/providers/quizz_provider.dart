@@ -7,8 +7,8 @@ import 'package:quizz_app/models/quizz_model.dart';
 class QuizzProvider extends ChangeNotifier{
     
 
-  Future<List<QuizzModel>> fetchQuizzList() async {
-    final response = await http.get(Uri.parse("https://opentdb.com/api.php?amount=10&category=23&difficulty=easy&type=multiple&encode=base64"));
+  Future<List<QuizzModel>> fetchQuizzList(String amount, String categoryId, String? diff) async {
+    final response = await http.get(Uri.parse("https://opentdb.com/api.php?amount=$amount&category=$categoryId&difficulty=$diff&type=multiple&encode=base64"));
 
     try{
       if(response.statusCode == 200){
