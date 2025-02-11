@@ -3,6 +3,7 @@ import 'package:quizz_app/components/question.dart';
 import 'package:quizz_app/models/quizz_model.dart';
 
 
+// ignore: must_be_immutable
 class ShowQuizz extends StatelessWidget {
   List<QuizzModel> questions;
 
@@ -13,7 +14,6 @@ class ShowQuizz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(questions);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Quiz"),

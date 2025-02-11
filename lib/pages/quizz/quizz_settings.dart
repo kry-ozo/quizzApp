@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizz_app/models/category_model.dart';
 import 'package:quizz_app/models/quizz_model.dart';
 import 'package:quizz_app/pages/quizz/show_quizz.dart';
 import 'package:quizz_app/providers/quizz_provider.dart';
 
 class QuizzSettings extends StatefulWidget {
-  final String quizzType;
-  const QuizzSettings({super.key, required this.quizzType});
+  final CategoryModel category;
+  const QuizzSettings({super.key, required this.category});
   static List<String >diffList = ["easy", "medium", "hard"];
 
   @override
@@ -23,7 +24,7 @@ class _QuizzSettingsState extends State<QuizzSettings> {
         leading: IconButton(onPressed: (){
           Navigator.of(context).pop();
         }, icon: const Icon(Icons.arrow_back, color: const Color.fromARGB(255, 255, 250, 255),)) ,
-        title: Text("${widget.quizzType} Quizz", style: const TextStyle(color: const Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold),),
+        title: Text("${widget.category.catageoryName} Quizz", style: const TextStyle(color: const Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold),),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 0, 53, 84),
       ),

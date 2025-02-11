@@ -26,10 +26,10 @@ class HomePage extends StatelessWidget {
             itemCount: 5,
             itemBuilder: (context, index){
               return GestureDetector(
-                child: CustomTile(title: categories[index],),
+                child: CustomTile(title: categories[index].catageoryName,),
                 onTap: (){
                   Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=> QuizzSettings(quizzType: categories[index])));
+                  MaterialPageRoute(builder: (context)=> QuizzSettings(category: categories[index])));
                 },
                 );
           })
