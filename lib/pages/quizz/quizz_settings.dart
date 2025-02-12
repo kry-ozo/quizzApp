@@ -57,7 +57,7 @@ class _QuizzSettingsState extends State<QuizzSettings> {
                   )
                   ),
                 SizedBox(
-                  width: 120,
+                  width: 200,
                   child:DropdownButtonFormField(
                     value: dropdownValue,
                     hint: const Text("Difficulty"),
