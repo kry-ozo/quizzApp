@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:uuid/uuid.dart';
 
 class QuizzModel {
+  final String id;
   final String type;
   final String difficulty;
   final String category;
@@ -8,9 +10,11 @@ class QuizzModel {
   final String correctAnswer;
   List<String> allAnswears;
 
-  QuizzModel({required this.type, required this.difficulty, required this.category, required this.question, required this.correctAnswer, required this.allAnswears});
+  QuizzModel({required this.id, required this.type, required this.difficulty, required this.category, required this.question, required this.correctAnswer, required this.allAnswears});
 
   factory QuizzModel.fromJson(Map<String, dynamic> json){
+    var uuid = const Uuid();
+    
     List<int> questionBytes = base64.decode(json['question']);
     String finalQuestion = utf8.decode(questionBytes);
 
@@ -28,6 +32,7 @@ class QuizzModel {
 
 
     return QuizzModel(
+      id: uuid.v4(),
       type: json['type'],
       difficulty: json['difficulty'],
       category: json['category'],

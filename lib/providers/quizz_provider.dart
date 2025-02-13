@@ -5,7 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:quizz_app/models/quizz_model.dart';
 
 class QuizzProvider extends ChangeNotifier{
-    
+
+  Map<String, String?> _selectedAnswers = {};
+  Map<String, String?> get selectedAnswears =>_selectedAnswers;
+
+  
 
   Future<List<QuizzModel>> fetchQuizzList(String amount, String categoryId, String? diff) async {
     final response = await http.get(Uri.parse("https://opentdb.com/api.php?amount=$amount&category=$categoryId&difficulty=$diff&type=multiple&encode=base64"));
@@ -23,5 +27,10 @@ class QuizzProvider extends ChangeNotifier{
     }catch(e){
       throw Exception(e.toString());
     }
+  }
+
+  void setSelectedAnswer(String questionIndex, String? answer) {
+    _selectedAnswers[questionIndex] = answer;
+    notifyListeners(); 
   }
 }
