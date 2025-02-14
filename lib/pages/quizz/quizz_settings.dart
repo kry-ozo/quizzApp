@@ -41,7 +41,6 @@ class _QuizzSettingsState extends State<QuizzSettings> {
           SizedBox(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 15,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                  SizedBox(
