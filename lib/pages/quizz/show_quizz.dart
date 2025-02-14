@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizz_app/components/question.dart';
 import 'package:quizz_app/models/quizz_model.dart';
+import 'package:quizz_app/pages/quizz/quizz_score.dart';
 import 'package:quizz_app/providers/quizz_provider.dart';
 
 
@@ -39,7 +40,8 @@ class ShowQuizz extends StatelessWidget {
              }),
            ),
            TextButton(onPressed: (){
-              print(Provider.of<QuizzProvider>(context, listen: false).selectedAnswears);
+              int score = Provider.of<QuizzProvider>(context, listen: false).calculateScore(questions);
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> QuizzScore(score: score, amountOfQuestions: questions.length)));
            }, child: const Text("Done"))
          ],
        )

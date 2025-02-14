@@ -33,4 +33,14 @@ class QuizzProvider extends ChangeNotifier{
     _selectedAnswers[questionIndex] = answer;
     notifyListeners(); 
   }
+
+  int calculateScore(List<QuizzModel> questions) {
+    int score = 0;
+    for (int i = 0; i < questions.length; i++) {
+      if (_selectedAnswers[i] == questions[i].correctAnswer) {
+        score++;
+      }
+    }
+    return score;
+  }
 }
