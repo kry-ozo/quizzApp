@@ -6,7 +6,7 @@ import 'package:quizz_app/models/quizz_model.dart';
 
 class QuizzProvider extends ChangeNotifier{
 
-  Map<String, String?> _selectedAnswers = {};
+  final Map<String, String?> _selectedAnswers = {};
   Map<String, String?> get selectedAnswears =>_selectedAnswers;
 
   
@@ -42,5 +42,9 @@ class QuizzProvider extends ChangeNotifier{
       }
     }
     return score;
+  }
+
+  void clearScore(){
+    _selectedAnswers.clear();
   }
 }

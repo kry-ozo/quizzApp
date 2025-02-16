@@ -82,6 +82,7 @@ class _QuizzSettingsState extends State<QuizzSettings> {
           ),
           const SizedBox(height: 40,),
           TextButton(onPressed: () async {
+            Provider.of<QuizzProvider>(context, listen: false).clearScore();
             String amount = _amountController.text;
             List<QuizzModel> questions = await Provider.of<QuizzProvider>(context, listen: false).fetchQuizzList(amount,widget.category.id, dropdownValue);
             Navigator.push(
