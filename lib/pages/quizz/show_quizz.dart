@@ -9,7 +9,7 @@ import 'package:quizz_app/providers/quizz_provider.dart';
 // ignore: must_be_immutable
 class ShowQuizz extends StatelessWidget {
   List<QuizzModel> questions;
-  List<String> correctAnswers = [];
+  
   
   
   ShowQuizz({
@@ -19,11 +19,11 @@ class ShowQuizz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    questions.forEach((element) => correctAnswers.add(element.correctAnswer),);
     void _onTap(String answear, String id){
       Provider.of<QuizzProvider>(context, listen: false).setSelectedAnswer(id, answear);
     }
+    
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +40,8 @@ class ShowQuizz extends StatelessWidget {
              }),
            ),
            TextButton(onPressed: (){
-              int score = Provider.of<QuizzProvider>(context, listen: false).calculateScore(questions);
+              Provider.of<QuizzProvider>(context, listen: false).setCorrectAnswer(questions);
+              int score = Provider.of<QuizzProvider>(context, listen: false).calculateScore();
               Navigator.of(context).push(MaterialPageRoute(builder: (context)=> QuizzScore(score: score, amountOfQuestions: questions.length)));
            }, child: const Text("Done"))
          ],

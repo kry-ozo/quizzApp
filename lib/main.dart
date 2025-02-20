@@ -54,14 +54,14 @@ class _MainAppState extends State<MainApp> {
           Text("Quizz", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255)),),
           Text("Account", style: TextStyle(color: Color.fromARGB(255, 255, 250, 255)),),
         ],
-        color: Color.fromARGB(255, 0, 53, 84),
+        color: const  Color.fromARGB(255, 0, 53, 84),
         circleColor: Colors.white,
         height: 65,
         circleWidth: 60,
         // tabCurve: ,
         
         cornerRadius: const BorderRadius.all(Radius.zero),
-        circleShadowColor: Color.fromARGB(255, 0, 53, 84),
+        circleShadowColor: const  Color.fromARGB(255, 0, 53, 84),
         elevation: 10,
         
       ),

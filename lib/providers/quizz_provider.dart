@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:quizz_app/models/quizz_model.dart';
@@ -7,7 +6,9 @@ import 'package:quizz_app/models/quizz_model.dart';
 class QuizzProvider extends ChangeNotifier{
 
   final Map<String, String?> _selectedAnswers = {};
+  final Map<String, String?> _correctAnswears = {};
   Map<String, String?> get selectedAnswears =>_selectedAnswers;
+  Map<String, String?> get correctAnswears => _correctAnswears;
 
   
 
@@ -34,17 +35,28 @@ class QuizzProvider extends ChangeNotifier{
     notifyListeners(); 
   }
 
-  int calculateScore(List<QuizzModel> questions) {
+  void setCorrectAnswer(List<QuizzModel> questions) {
+    for(int i = 0; i<=questions.length-1; i++ ){
+      _correctAnswears[questions[i].id] = questions[i].correctAnswer;
+    }
+    notifyListeners(); 
+  }
+
+  int calculateScore() {
+    print(_correctAnswears);
+    print(_selectedAnswers);
     int score = 0;
-    for (int i = 0; i < questions.length; i++) {
-      if (_selectedAnswers[i] == questions[i].correctAnswer) {
+    _selectedAnswers.forEach((questionId, userAnswear){
+      if(userAnswear == _correctAnswears[questionId]){
         score++;
       }
-    }
+    });
+    _clear();
     return score;
   }
 
-  void clearScore(){
+  void _clear(){
     _selectedAnswers.clear();
+    _correctAnswears.clear();
   }
 }
