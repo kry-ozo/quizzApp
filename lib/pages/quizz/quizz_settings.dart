@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:quizz_app/models/category_model.dart';
 import 'package:quizz_app/models/quizz_model.dart';
@@ -16,25 +17,61 @@ class QuizzSettings extends StatefulWidget {
 
 class _QuizzSettingsState extends State<QuizzSettings> {
   
-  String? dropdownValue = QuizzSettings.diffList.first;
+  String? dropdownValue;
   TextEditingController _amountController = TextEditingController();
+  FocusNode _focusNode = FocusNode();
+  Color _borderColor = Colors.grey;
+  bool _isTouched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_onFocusChange); 
+    _focusNode.dispose();
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      _borderColor = _focusNode.hasFocus ? Color.fromARGB(255, 0, 53, 84) : Colors.grey;
+    });
+  }
+
+  String? _validateInput(String? value) {
+    if (!_isTouched) return null;
+    if (value == null || value.isEmpty) {
+      return 'Please enter a number';
+    }
+    final number = int.tryParse(value);
+    if (number == null || number < 1 || number > 30) {
+      return 'Min 1 max 30';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: (){
           Navigator.of(context).pop();
-        }, icon: const Icon(Icons.arrow_back, color: const Color.fromARGB(255, 255, 250, 255),)) ,
-        title: Text("${widget.category.catageoryName} Quizz", style: const TextStyle(color: const Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold),),
+        }, icon: const Icon(Icons.arrow_back, color:  Color.fromARGB(255, 255, 250, 255),)) ,
+        title: Text("${widget.category.catageoryName} Quizz", style: const TextStyle(color:  Color.fromARGB(255, 255, 250, 255), fontWeight: FontWeight.bold),),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 0, 53, 84),
       ),
       body:   Column(
         children: [
            const Center(
-            child:  const Padding(
-            padding: const EdgeInsets.only(top: 70),
-            child: const Text("Quizz Settings", style: const TextStyle(color: const Color.fromARGB(255, 0, 53, 84), fontSize: 32, fontWeight: FontWeight.bold,) ,),
+            child:   Padding(
+            padding:  EdgeInsets.only(top: 70),
+            child:  Text("Quizz Settings", style: const TextStyle(color: const Color.fromARGB(255, 0, 53, 84), fontSize: 32, fontWeight: FontWeight.bold,) ,),
                     ),
           ),
           const SizedBox(height: 40,),
@@ -44,15 +81,33 @@ class _QuizzSettingsState extends State<QuizzSettings> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                  SizedBox(
-                  width: 120,
+                  width: 80,
                   child: TextField(
                     controller: _amountController,
-                    decoration: const InputDecoration(
+                    focusNode: _focusNode,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    
+                    decoration: InputDecoration(
+                      hintText: "Amount",
                       contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                      border: const UnderlineInputBorder(
-                        borderSide: const BorderSide(color: const Color.fromARGB(255, 0, 53, 84))
-                      )
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: _borderColor),
+                      ),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      errorText: _validateInput(_amountController.text),
+                      errorStyle: const TextStyle(height: 0, fontSize: 0),
                     ),
+                    onChanged: (value) {
+                      setState(() {
+                        _isTouched = true;
+                      }); 
+                    },
                   )
                   ),
                 SizedBox(
@@ -60,20 +115,22 @@ class _QuizzSettingsState extends State<QuizzSettings> {
                   child:DropdownButtonFormField(
                     value: dropdownValue,
                     hint: const Text("Difficulty"),
-                    onChanged: (value){
+                    onChanged: (String? value){
                       setState(() {
                         dropdownValue = value;
                       });
+                      print("Wybrana wartość: $dropdownValue");
                     },
                     items: QuizzSettings.diffList.map<DropdownMenuItem<String>>((String value){
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: Text(value),
+                          child: Text(value, style:TextStyle(color: Colors.black, fontSize: 14), textAlign: TextAlign.center,),
                         )
                         );
                     }).toList(),
+                    style: TextStyle(color: Colors.black, fontSize: 40),
                   )
                   ),
                 
