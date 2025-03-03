@@ -17,7 +17,7 @@ class QuizzSettings extends StatefulWidget {
 
 class _QuizzSettingsState extends State<QuizzSettings> {
   
-  String? dropdownValue;
+  String? dropdownValue = QuizzSettings.diffList.first;
   TextEditingController _amountController = TextEditingController();
   FocusNode _focusNode = FocusNode();
   Color _borderColor = Colors.grey;
@@ -113,13 +113,12 @@ class _QuizzSettingsState extends State<QuizzSettings> {
                 SizedBox(
                   width: 200,
                   child:DropdownButtonFormField(
-                    value: dropdownValue,
+                    value: QuizzSettings.diffList.first,
                     hint: const Text("Difficulty"),
                     onChanged: (String? value){
                       setState(() {
                         dropdownValue = value;
                       });
-                      print("Wybrana wartość: $dropdownValue");
                     },
                     items: QuizzSettings.diffList.map<DropdownMenuItem<String>>((String value){
                       return DropdownMenuItem<String>(
