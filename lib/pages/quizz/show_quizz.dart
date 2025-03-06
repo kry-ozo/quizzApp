@@ -39,11 +39,15 @@ class ShowQuizz extends StatelessWidget {
                 return Question(quizz: questions[index], onTap: _onTap,);
              }),
            ),
-           TextButton(onPressed: (){
+           TextButton(
+            onPressed: (){
               Provider.of<QuizzProvider>(context, listen: false).setCorrectAnswer(questions);
               int score = Provider.of<QuizzProvider>(context, listen: false).calculateScore();
               Navigator.of(context).push(MaterialPageRoute(builder: (context)=> QuizzScore(score: score, amountOfQuestions: questions.length)));
-           }, child: const Text("Done"))
+           }, child: const Text("Done", style: TextStyle(
+            color: Color.fromARGB(255, 0, 53, 84),
+            fontSize: 24
+           ),))
          ],
        )
     );
