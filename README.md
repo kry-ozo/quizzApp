@@ -28,15 +28,15 @@ Follow these steps to run the project locally:
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/quiz-app.git
-Navigate to the project directory:
+2. Navigate to the project directory:
 
     ```bash
     cd quiz-app
-Install dependencies:
+3. Install dependencies:
 
     ```bash
     flutter pub get 
-Run the application:
+4. Run the application:
 
     ```bash
     flutter run
