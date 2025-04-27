@@ -15,8 +15,30 @@ The app connects to a remote **API** to fetch new questions every time.
 - Flutter (Dart)
 - REST API integration
 
+## Screenshots
+<!-- You can add screenshots here if available -->
+<!-- Example:
+![Quiz Screen](link-to-your-screenshot)
+-->
+
 ## Installation
 
+Follow these steps to run the project locally:
+
 1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/quiz-app.git
+   ```bash
+   git clone https://github.com/yourusername/quiz-app.git
+Navigate to the project directory:
+
+    ```bash
+    cd quiz-app
+Install dependencies:
+
+    ```bash
+    flutter pub get 
+Run the application:
+
+    ```bash
+    flutter run
+    
+Make sure you have Flutter installed and configured before running the app.
